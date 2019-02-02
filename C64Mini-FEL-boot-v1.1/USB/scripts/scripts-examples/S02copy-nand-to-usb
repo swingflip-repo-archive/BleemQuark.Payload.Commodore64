@@ -1,0 +1,16 @@
+. script_helper
+
+echo "${clr_grn}Script $0"
+
+if [ ! -e /mnt/backup/nanda ]
+then
+	echo "${clr_grn}Loading NAND driver"
+	insmod -f /opt/nand.ko
+	mkdir /mnt/backup
+	echo "${clr_grn}Backing up /dev/nanda"
+	dd if=/dev/nanda of=/mnt/backup/nanda
+	echo "${clr_grn}Backing up /dev/nandb"
+	dd if=/dev/nandb of=/mnt/backup/nandb
+else
+	echo "${clr_red}Backup of nand already exists"
+fi

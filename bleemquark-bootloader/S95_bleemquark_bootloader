@@ -1,0 +1,50 @@
+#!/bin/sh
+###############################################################################
+# BleemQuark Bootloader Service
+# ModMyClassic.com / https://discordapp.com/invite/8gygsrw
+###############################################################################
+
+start()
+{
+  SLEEP=2
+  echo "[BLEEMQUARK](Executing) BleemQuark BootLoader"
+  while true; do
+    MOUNT_FAIL=0
+    SD_DEVICE_NAME="$(blkid | grep "^/tmp/usbdrive/sd\(a\|b\)1:" | awk -F: '{print $1}' | head -1)"
+    if [ -z "$SD_DEVICE_NAME" ]; then
+      echo "no media found"
+      sleep $SLEEP
+    else
+      ecgi "found media! Found: $SD_DEVICE_NAME"
+      mkdir -p "/tmp" "/media"
+      mount "$SD_DEVICE_NAME" "/media" || MOUNT_FAIL=1
+      [ "$MOUNT_FAIL" = "0" ] && break
+    fi
+  done
+  [ -f "/media/bleemquark_UPDATE.tar" ] && echo "Execute the bleemquark bootloader update routine" #Whatever that might be
+  [ -f "/media/bleemquark/bin/execute" ] && chmod +x "/media/bleemquark/bin/"* && /media/bleemquark/bin/execute
+}
+
+stop()
+{
+  cd /
+  umount "/media"
+  sync
+  echo "[BLEEMQUARK](Executed) BleemQuark BootLoader"
+}
+
+case "$1" in
+start)
+  start
+;;
+stop)
+  stop
+;;
+restart)
+  stop
+  start
+;;
+*)
+  echo "BleeemQuark Bootloader service to load BleemQuark by Swingflip"
+  exit 1
+esac

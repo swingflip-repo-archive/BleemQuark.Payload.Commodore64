@@ -1,0 +1,7 @@
+#=uEnv
+machid_sunxi_kernel=10bb
+bootm_boot_mode=sec
+console=console=ttyUSB0,115200 console=ttyS0,115200
+ramfs=ramfs
+bootcmd_sunxi_kernel=setenv machid ${machid_sunxi_kernel};setenv bootargs ${ramfs} ${console};bootm 0x48000000
+bootcmd=run bootcmd_sunxi_kernel

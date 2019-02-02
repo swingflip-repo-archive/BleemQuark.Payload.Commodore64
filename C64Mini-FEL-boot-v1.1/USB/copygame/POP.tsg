@@ -1,0 +1,13 @@
+T:Prince of Persia
+X:64,pal,truedrive,sid6581
+D:en:You have ONE hour to rescue the princess!
+A:Jordan Mechner
+M:
+E:
+Y:1989
+F:games/POP.vsf.gz
+C:covers/POP.png
+G:screens/POP-01.png
+G:screens/POP-02.png
+J:2*:JU,JD,JL,JR,JF,JF,JF,JF,JF,,,,JF
+J:1:JU,JD,JL,JR,JF,JF,JF,JF,JF,,,,JF

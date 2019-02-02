@@ -1,0 +1,38 @@
+. script_helper
+
+echo "${clr_grn}Script $0"
+
+if [ -d /mnt/copygame ]
+then
+	echo "${clr_grn}Loading NAND driver"
+	insmod -f /opt/nand.ko
+	if [ -b /dev/nandb ]
+	then
+		echo "${clr_grn}Mounting C64 Mini rootfs /dev/nandb on /mnt2"
+		mkdir /mnt2
+		mount /dev/nandb /mnt2
+		if [ $? -eq 0 ]
+		then
+			echo "${clr_grn}Mount /dev/nandb to mnt2 OK"
+			if [ -d /mnt2/usr/share/the64/games ]
+			then
+				echo "${clr_grn}Copying USB-stick copygame directory content to /mnt2/usr/share/th64/games/"
+				rm /tmp/cpg.log
+				cp -rv /mnt/copygame/* /mnt2/usr/share/the64/games/ >/tmp/cpg.log
+				echo "${clr_grn}Result: $?"
+				echo "${clr_grn}Files copied:"
+				if [ -c /dev/ttyS0 ]; then /usr/bin/echo -e "${clr_grn}" >>/dev/ttyS0; cat /tmp/cpg.log >>/dev/ttyS0; /usr/bin/echo -e "${clr_std}" >>/dev/ttyS0;fi
+				if [ -c /dev/ttyUSB0 ]; then /usr/bin/echo -e "${clr_grn}" >>/dev/ttyUSB0; cat /tmp/cpg.log >>/dev/ttyUSB0; /usr/bin/echo -e "${clr_std}" >>/dev/ttyUSB0; fi
+				sync
+			else
+				echo "${{clr_red}}/mnt2/usr/share/the64/games doesn't exist?"
+#				ls -lisa /mnt2/usr/share/the64
+			fi
+		else
+			echo "${{clr_red}}Mounting failed (error $?)"
+		fi
+		umount /mnt2
+	fi
+else
+	echo "${{clr_red}}Directory copygame doesn't exist"
+fi

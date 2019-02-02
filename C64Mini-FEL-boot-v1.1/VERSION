@@ -1,0 +1,7 @@
+1.1
+Updated nand.ko driver to the version in C64 Mini firmware 1_2_0-shield (adds ATO NAND support)
+Added driver for USB2Ethernet ASIX AX88179/178A USB 3.0/2.0 to Gigabit Ethernet Devices
+Changed music player from mpg123 playing mp3's to sidplay2 playing sid files
+Minor changes to example scripts
+Minor changes to /etc/inittab
+Changed prompt to show full path

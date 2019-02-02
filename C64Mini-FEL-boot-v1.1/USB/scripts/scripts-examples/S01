@@ -1,0 +1,1 @@
+echo "Script $0" >/dev/ttyS0

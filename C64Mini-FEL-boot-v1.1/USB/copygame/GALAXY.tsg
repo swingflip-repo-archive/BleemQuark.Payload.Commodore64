@@ -1,0 +1,18 @@
+T:GALAXY
+X:64,pal,truedrive,driveicon,basic,sid6581
+D:en:Galaxy shoot-em up
+D:fr:BASIC (Code d’instruction à tout usage pour débutants) est un langage informatique procédural conçu pour être utilisé par tous. La console C64 d’origine proposait une variante de BASIC disponible ici. Rendez-vous sur www.thec64.com pour plus d’informations et apprendre à coder en BASIC sur la THEC64.
+D:de:Beginners All-purpose Symbolic Instruction Code (BASIC) ist eine prozedurale Programmiersprache und wurde zur einfachen Handhabung entwickelt. Der ursprüngliche C64 Computer enthielt eine Variante von BASIC, die hier erhältlich ist. Bitte besuche www.thec64.com für weitere Informationen, um den THEC64 auf BASIC entsprechend zu programmieren.
+D:es:Beginners All-purpose Symbolic Instruction Code (BASIC) es un lenguaje de programación de procedimientos, y se diseñó para ser fácil de usar. La computadora original C64 incluía una variante de BASIC que está disponible aquí. Visita www.thec64.com para obtener más información sobre cómo aprender a programar en BASIC en THEC64.
+D:it:Il Beginner All-purpose Symbolic Instruction Code (BASIC) è un linguaggio di programmazione procedurale, creato per essere di facile uso. Il computer C64 originale includeva una variante del BASIC, ora disponibile. Visita il sito www.thec64.com per ulteriori informazioni sulla programmazione in BASIC sul THEC64.
+A:Henrik Wenig
+M:
+E:
+Y:1983
+F:games/GALAXY.vsf.gz
+C:covers/GALAXY-cover.png
+G:screens/GALAXY-01.png
+G:screens/GALAXY-02.png
+G:screens/GALAXY-03.png
+J:2:JU,JD,JL,JR,JF,JF,JF,JF,JF,,,,JF
+J:1*:JU,JD,JL,JR,JF,JF,JF,JF,JF,,,,JF

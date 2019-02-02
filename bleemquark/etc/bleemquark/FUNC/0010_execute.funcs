@@ -1,0 +1,102 @@
+#!/bin/sh
+###############################################################################
+# BleemQuark Function Library - Execution
+# ModMyClassic.com / https://discordapp.com/invite/8gygsrw
+###############################################################################
+
+dump_nand_func(){
+  echo "[BLEEMQUARK](Executing) dump_nand_func()"
+  if [ ! -f "$runtime_flag_path/dumped_nand.flag" ] || [ "$1" = "--force" ]; then
+    ok=1
+    mkdir -p "$dump_path/nand_RAW"
+    mount -o remount,ro / #Safety First!
+    [ ! dd if=/dev/nanda bs=1M | gzip > "$dump_path/nand_RAW/nanda.bin.gz" ] && ok=0
+    [ ! dd if=/dev/nandb bs=1M | gzip > "$dump_path/nand_RAW/nandb.bin.gz" ] && ok=0
+    if [ "$ok" = "1" ]; then
+      touch "$runtime_flag_path/dumped_nand.flag"
+      echo "[BLEEMQUARK](SUCCESS) dump_nand_func()"
+    else
+      echo "[BLEEMQUARK](FAIL) dump_nand_func()"
+    fi
+    sync
+  else 
+    echo "[BLEEMQUARK](INFO) Skipping as dump flag already present" 
+  fi
+  echo "[BLEEMQUARK](Executed) dump_nand_func()"
+}
+
+dump_fs_func(){
+  echo "[BLEEMQUARK](Executing) dump_fs_func()"
+  if [ ! -f "$runtime_flag_path/dumped_fs.flag" ] || [ "$1" = "--force" ]; then
+    ok=1
+    mkdir -p "$dump_path/nand_FS/games/games" "$dump_path/nand_FS/games/covers" "$dump_path/nand_FS/games/screens"
+    mkdir -p "$dump_path/nand_FS/libraries/lib" "$dump_path/nand_FS/libraries/usr/lib"
+    mount -o remount,ro / #Safety First!
+    [ ! cp -f "/usr/share/the64/games/"*.tsg "$dump_path/nand_FS/games/" ] && ok=0
+    [ ! cp -f "/usr/share/the64/games/games/"* "$dump_path/nand_FS/games/games/" ] && ok=0
+    [ ! cp -f "/usr/share/the64/games/covers/"* "$dump_path/nand_FS/games/covers/" ] && ok=0
+    [ ! cp -f "/usr/share/the64/games/screens/"* "$dump_path/nand_FS/games/screens/" ] && ok=0
+    [ ! cp -f "/usr/share/the64/ui/data/gamecontrollerdb.txt" "$dump_path/nand_FS/" ] && ok=0
+    [ ! cp -f "/usr/bin/the64" "$dump_path/nand_FS/" ] && ok=0
+    [ ! cp -frL "/lib/" "$dump_path/nand_FS/libraries/lib/" ] && ok=0
+    [ ! cp -frL "/usr/lib/" "$dump_path/nand_FS/libraries/usr/lib/" ] && ok=0
+    [ ! cp -f "/usr/share/the64/ui/data/gamecontrollerdb.txt" "$dump_path/nand_FS/" ] && ok=0
+    [ ! cp -f "/usr/share/the64/ui/data/gamecontrollerdb.txt" "$dump_path/nand_FS/" ] && ok=0
+    if [ "$ok" = "1" ]; then
+      touch "$runtime_flag_path/dumped_fs.flag"
+      echo "[BLEEMQUARK](SUCCESS) dump_fs_func()"
+    else
+      echo "[BLEEMQUARK](FAIL) dump_fs_func()"
+    fi
+    sync
+  else 
+    echo "[BLEEMQUARK](INFO) Skipping as dump flag already present" 
+  fi
+  echo "[BLEEMQUARK](Executed) dump_fs_func()"
+}
+
+dump_kernel_info_func(){
+  echo "[BLEEMQUARK](Executing) dump_kernel_info_func()"
+  if [ ! -f "$runtime_flag_path/dumped_info.flag" ] || [ "$1" = "--force" ]; then
+    ok=1
+    mkdir -p "$dump_path/kernel_INFO"
+    mount -o remount,ro / #Safety First!
+    sunxi-script_extractor > "$dump_path/kernel_INFO/script.bin"
+    bin2fex "$dump_path/kernel_INFO/script.bin" > "$dump_path/kernel_INFO/script.fex" 
+    sunxi-meminfo -u > "$dump_path/kernel_INFO/dram.c"
+    sync
+  else 
+    echo "[BLEEMQUARK](INFO) Skipping as dump flag already present" 
+  fi
+  echo "[BLEEMQUARK](Executed) dump_kernel_info_func()"
+}
+
+dump_fstruct_func(){
+  echo "[BLEEMQUARK](Executing) dump_file_structure()"
+  if [ ! -f "$runtime_flag_path/dumped_fstruct.flag" ] || [ "$1" = "--force" ]; then
+    echo "Dumping file structure to: $dump_path/C64_file_structure.txt"
+    echo "This might take awhile!"
+    [ ! -d "$dump_path" ] && mkdir -p "$dump_path"
+    ls -lhAR / &> "$dump_path/C64_file_structure.txt"
+    [ -f "$dump_path/C64_file_structure.txt" ] && touch "$runtime_flag_path/dumped_fstruct.flag"
+  else 
+    echo "[BLEEMQUARK](INFO) Skipping as dump flag already present" 
+  fi
+  echo "[BLEEMQUARK](Executed) dump_file_structure()"
+}
+
+complete_dump_func(){
+  echo "[BLEEMQUARK](Executing) complete_dump_func()"
+  dump_nand_func
+  dump_fs_func
+  dump_kernel_info_func
+  dump_fstruct_func
+  echo "[BLEEMQUARK](ExecExecuteduting) complete_dump_func()"
+}
+
+debug_run_func(){
+  #Misc debugging commands get dumped here.
+  echo "[BLEEMQUARK](Executing) debug_run_func()"
+
+  echo "[BLEEMQUARK](Executed) debug_run_func()"
+}

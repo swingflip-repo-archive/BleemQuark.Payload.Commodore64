@@ -1,0 +1,43 @@
+#!/bin/sh
+###############################################################################
+# BleemQuark Bootstapper executor v0.7
+# ModMyClassic.com / https://discordapp.com/invite/8gygsrw
+###############################################################################
+
+### LOAD CONFIGURATION ########################################################
+for cfgs in /media/bleemquark/etc/bleemquark/CFG/*.cfg; do source "$cfgs"; done
+
+### LOAD FUNCTION LIBRARIES ###################################################												  
+for funcs in /media/bleemquark/etc/bleemquark/FUNC/*.funcs; do source "$funcs"; done
+
+### EXECUTE ###################################################################
+main(){
+  start=$(date +%s)
+  for x in "${boot_sequence[@]}"; do
+    [ "$runtime_log" = "1" ] && echo "[BLEEMQUARK](BOOT) booting "$x"_func()" >> "$runtime_log_path/bleemquark.log" 2>&1
+    time1=$(date +%s%N)
+    if [ "$runtime_log" = "1" ]; then
+      if [ ! -z $(echo "$x" | grep "dump_") ] && [ "$force_redump" = "1" ]; then
+        $x"_func" --force >> "$runtime_log_path/bleemquark.log" 2>&1
+        continue
+      fi
+      $x"_func" >> "$runtime_log_path/bleemquark.log" 2>&1
+    else
+      if [ ! -z $(echo "$x" | grep "dump_") ] && [ "$force_redump" = "1" ]; then
+        $x"_func" --force
+        continue
+      fi
+      $x"_func" 
+    fi
+    time2=$(date +%s%N)
+    [ "$runtime_log" = "1" ] && echo "[BLEEMQUARK](PROFILE) "$x"_func() took: $(((time1-time2)/1000000))ms to execute" >> "$runtime_log_path/bleemquark.log" 2>&1
+  done 
+}
+
+###############################################################################
+main #Do stuff and things
+
+#If we get here... Panic and Reboot
+sync
+reboot
+exit 1

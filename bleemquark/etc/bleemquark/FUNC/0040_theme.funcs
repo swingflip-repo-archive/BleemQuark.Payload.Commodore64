@@ -1,0 +1,14 @@
+#!/bin/sh
+###############################################################################
+# BleemQuark Function Library - Stock UI Themes
+# ModMyClassic.com / https://discordapp.com/invite/8gygsrw
+###############################################################################
+
+select_UI_theme(){
+  echo "[BLEEMQUARK](Executing) select_UI_theme()"
+  start=$(date +%s%N)
+
+  end=$(date +%s%N)
+  echo "[BLEEMQUARK](PROFILE) select_UI_theme() took: $(((end-start)/1000000))ms to execute"
+  echo "[BLEEMQUARK](INFO) completed select_UI_theme()"
+}
